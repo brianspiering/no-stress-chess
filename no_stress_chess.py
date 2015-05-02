@@ -23,12 +23,18 @@ from random import choice
 
 import getch
 
-pieces = {'King': 'Moves exactly one vacant square in any direction: forwards, backwards, left, right, or diagonally',
-        'Queen': 'Moves any number of vacant squares in any direction: forwards, backwards, left, right, or diagonally, in a straight line.',
-        'Rook': 'Moves any number of vacant squares forwards, backwards, left, or right in a straight line.',
-        'Bishop': 'Moves any number of vacant squares diagonally in a straight line.',
-        'Knight': 'Moves on an extended diagonal from one corner of any 2×3 rectangle of squares to the furthest opposite corner.',
-        'Pawn': "Moves forward exactly one space. Optionally, two spaces when on its starting square, toward the opponent's side of the board. When there is an enemy piece one square diagonally ahead of the pawn, either left or right, then the pawn may capture that piece."}
+pieces = {'King': {'icon': '♔',
+                    'move':'Moves exactly one vacant square in any direction: forwards, backwards, left, right, or diagonally'},
+        'Queen': {'icon': '♕',
+                    'move':'Moves any number of vacant squares in any direction: forwards, backwards, left, right, or diagonally, in a straight line.'},
+        'Rook': {'icon': '♖',
+                'move': 'Moves any number of vacant squares forwards, backwards, left, or right in a straight line.'},
+        'Bishop': {'icon': '♗',
+                    'move': 'Moves any number of vacant squares diagonally in a straight line.'},
+        'Knight': {'icon': '♘',
+                    'move': 'Moves on an extended diagonal from one corner of any 2×3 rectangle of squares to the furthest opposite corner.'},
+        'Pawn': {'icon': '♙',
+                    'move': "Moves forward exactly one space. Optionally, two spaces when on its starting square, toward the opponent's side of the board. When there is an enemy piece one square diagonally ahead of the pawn, either left or right, then the pawn may capture that piece."}}
 
 cards = None # 56 action cards
 
@@ -36,19 +42,21 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def play():
-    "Get user input and play turn."
+    """Get user input and play turn.
+    Until user opts out.
+    """
 
     while True:
-        print("Press any key to piece a piece (or q to quit): ")
+        print("Press any key to pick a piece (or q to quit): ")
         user_input = getch.getch()
         clear_screen()
 
         if user_input != 'q':
             current_piece = choice(list(pieces.keys()))    
-            print(current_piece, '\n')
-            print(pieces[current_piece], '\n')
+            print(current_piece, ': ', pieces[current_piece]['icon'], '\n', sep="")
+            print(pieces[current_piece]['move'], '\n')
         else:
-            print("Thanks for trying playing No Stress Chess®")
+            print("Thanks for trying No Stress Chess®")
             break
 
 if __name__ == '__main__':
