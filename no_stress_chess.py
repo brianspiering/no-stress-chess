@@ -21,6 +21,8 @@ Pick a card from your hand of 5 cards.
 import os
 from random import choice
 
+import getch
+
 pieces = {'King': 'Moves exactly one vacant square in any direction: forwards, backwards, left, right, or diagonally',
         'Queen': 'Moves any number of vacant squares in any direction: forwards, backwards, left, right, or diagonally, in a straight line.',
         'Rook': 'Moves any number of vacant squares forwards, backwards, left, or right in a straight line.',
@@ -30,20 +32,25 @@ pieces = {'King': 'Moves exactly one vacant square in any direction: forwards, b
 
 cards = None # 56 action cards
 
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def play():
+    "Get user input and play turn."
+
     while True:
-        i = input("Press enter to get piece (or q to quit): ")
-        if i != 'q':
-            current_piece = choice(list(pieces.keys()))
-            # print(os.system('clear'))
-            os.system('cls' if os.name == 'nt' else 'clear')
-            # print(chr(27) + "[2J")
+        print("Press any key to piece a piece (or q to quit): ")
+        user_input = getch.getch()
+        clear_screen()
+
+        if user_input != 'q':
+            current_piece = choice(list(pieces.keys()))    
             print(current_piece, '\n')
             print(pieces[current_piece], '\n')
         else:
+            print("Thanks for trying playing No Stress Chess®")
             break
 
-    print("Thanks for trying playing No Stress Chess® ")
-
 if __name__ == '__main__':
+    clear_screen()
     play()
